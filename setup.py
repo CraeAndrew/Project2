@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = "mile4"
+package_name = "mile5"
 
 setup(
     name=package_name,
@@ -17,12 +17,12 @@ setup(
     zip_safe=True,
     maintainer="crae",
     maintainer_email="craeandrew@ufl.edu",
-    description="building controller",
+    description="Pose Estimator",
     license="N/A",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-        'joy = mile4.joy:main',
+        'joy = mile5.joy:main',
         ],
     },
 )
