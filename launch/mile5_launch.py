@@ -7,7 +7,7 @@ def generate_launch_description():
     ld = LaunchDescription()
 
     joy = Node(
-        package="mile4",
+        package="mile5",
         executable="joy",
         #parameters=[{"Up": 0.0},
         #            {"Ui": 0.0},
