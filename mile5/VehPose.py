@@ -29,34 +29,35 @@ class VehiclePose(Node):
         self.subscription  # prevent unused variable warning
         self.subscription2
         
-        self.x = 0
-        self.y = 0
+        self.x = 0.0
+        self.y = 0.0
 
-        self.theta.z = 0
-        self.theta.w = 0
-        #self.ov = 0
-        #self.ow = 0
+        self.theta = 0.0
 
         self.publisher = self.create_publisher(PoseStamped, 'vehicle_pose', 10)
        
     def listener_callback(self, msg):
-        
-        delta_t = 0.15
-        
+        self.x = msg.pose.point.x
+        self.y = msg.pose.point.y        
 
     def listener_callback2(self, msg):
-        
 
+        v = msg.twist.twist.linear.x
+
+        z = msg.pose.pose.orientation.z
+        w = msg.pose.pose.oreientation.w
+
+        self.theta = 2*math.atan2(z, w)
+
+        x_calc = self.x + v * math.cos(self.theta) * 0.15
+        y_calc = self.y + v * math.sin(self.theta) * 0.15
         
         msgEst = PoseStamped()
-        msgEst.pose.position.x = 1
-        msgEst.pose.position.y = 1
-        msgEst.pose.orientation.z =  # pass in the odometry pose.pose.orientation.z
-        msgEst.pose.orientation.w =  1 # pass in the odometry pose.pose.orientation.w
-        
-        self.theta.z = 2*math.atan(2*z)
-        self.theta.w = 2*math.atan(2*w)
-        
+        msgEst.pose.position.x = x_calc
+        msgEst.pose.position.y = y_calc
+        msgEst.pose.orientation.z = z
+        msgEst.pose.orientation.w = w
+
         self.publisher.publish(msgEst)
 
 def main(args=None):
