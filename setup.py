@@ -22,7 +22,7 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-        'VehControl = project2.project2:main',
+        'VehControl = project2.VehControl:main',
         ],
     },
 )
