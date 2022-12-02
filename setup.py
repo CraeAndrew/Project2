@@ -17,7 +17,7 @@ setup(
     zip_safe=True,
     maintainer="crae",
     maintainer_email="craeandrew@ufl.edu",
-    description="Pose Estimator",
+    description="Auto Vehicle Proj",
     license="N/A",
     tests_require=["pytest"],
     entry_points={
