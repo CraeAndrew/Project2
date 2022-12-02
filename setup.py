@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = "mile5"
+package_name = "project2"
 
 setup(
     name=package_name,
@@ -22,7 +22,7 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-        'project2 = project2.project2:main',
+        'VehControl = project2.project2:main',
         ],
     },
 )
