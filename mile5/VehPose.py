@@ -37,15 +37,15 @@ class VehiclePose(Node):
         self.publisher = self.create_publisher(PoseStamped, 'vehicle_pose', 10)
        
     def listener_callback(self, msg):
-        self.x = msg.pose.point.x
-        self.y = msg.pose.point.y        
+        self.x = msg.pose.position.x
+        self.y = msg.pose.position.y
 
     def listener_callback2(self, msg):
 
         v = msg.twist.twist.linear.x
 
         z = msg.pose.pose.orientation.z
-        w = msg.pose.pose.oreientation.w
+        w = msg.pose.pose.orientation.w
 
         self.theta = 2*math.atan2(z, w)
 
