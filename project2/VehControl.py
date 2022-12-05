@@ -131,7 +131,10 @@ class VehicleControllerPointAtCarrot(Node):
         elif (self.have_goal_pose and self.have_vehicle_pose):
             
             # Put your controller below here.
-            
+            self.error = 0.0
+            self.error = math.sqrt((self.closest_point[0]-self.vehicle_point[0])^2+(self.closest_point[1]-self.vehicle_point[1])^2)
+            new_steering_angle = self.old_steering_angle + self.K_p*(self.closest_heading_rad - self.self.vehicle_heading_rad) + self.K_p*self.error
+            self.old_steering_angle = new_steering_angle
             
             # now send a VehCmd message out
             out_msg = VehCmd()
