@@ -10,7 +10,7 @@ from geometry_msgs.msg import PoseStamped
 from gps_nav_interfaces.msg import CurrentGoalPose
 from std_msgs.msg import Int8
 from std_msgs.msg import Int16
-from gps_nav_interfaces.msg import VehCmd   # must be same message format as av1tenth drive_interfaces
+from drive_interfaces.msg import VehCmd   # must be same message format as av1tenth drive_interfaces
 from gps_nav.uf_support.geometry_support import value_near
 
 D2R = math.pi/180.0
