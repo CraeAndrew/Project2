@@ -39,8 +39,8 @@ class VehicleControllerPointAtCarrot(Node):
         self.main_timer = self.create_timer(0.1, self.main_timer_callback)
 
         self.declare_parameter('L_wheelbase', 0.3)  # meters
-        self.declare_parameter('K_p', 0.2)  # PID parameter
-        self.declare_parameter('K_d', 0.1)  # PID parameter
+        self.declare_parameter('K_p', 0.007)  # PID parameter
+        self.declare_parameter('K_d', 0.0)  # PID parameter
         self.declare_parameter('K_i', 0.0)  # PID parameter
         self.K_p = self.get_parameter('K_p').get_parameter_value().double_value
         self.K_d = self.get_parameter('K_d').get_parameter_value().double_value
@@ -132,8 +132,41 @@ class VehicleControllerPointAtCarrot(Node):
             
             # Put your controller below here.
             self.error = 0.0
-            self.error = math.sqrt((self.closest_point[0]-self.vehicle_point[0])^2+(self.closest_point[1]-self.vehicle_point[1])^2)
-            new_steering_angle = self.old_steering_angle + self.K_p*(self.closest_heading_rad - self.self.vehicle_heading_rad) + self.K_p*self.error
+            self.error = math.sqrt((self.closest_point[0]-self.vehicle_point[0])**2+(self.closest_point[1]-self.vehicle_point[1])**2)
+            
+            if(self.vehicle_heading_rad > math.pi):
+                self.vehicle_heading_rad -= math.pi * 2
+            elif(self.vehicle_heading_rad < -math.pi):
+                self.vehicle_heading_rad += math.pi * 2
+
+            if(self.vehicle_heading_rad < math.pi/4 and self.vehicle_heading_rad > -math.pi/4):
+                if(self.closest_point[1] < self.vehicle_point[1]):
+                    self.error = -self.error
+
+            # LEFT
+            elif(self.vehicle_heading_rad > 3*math.pi/4 or self.vehicle_heading_rad < -3*math.pi/4):
+                if(self.closest_point[1] > self.vehicle_point[1]):
+                    self.error = -self.error
+            
+            # UP
+            elif(self.vehicle_heading_rad >= math.pi/4 and self.vehicle_heading_rad <= 3*math.pi/4):
+                if(self.closest_point[0] > self.vehicle_point[0]):
+                    self.error = -self.error
+            # DOWN
+            elif(self.vehicle_heading_rad < -math.pi/4 and self.vehicle_heading_rad > -3*math.pi/4):
+                if(self.closest_point[0] < self.vehicle_point[0]):
+                    self.error = -self.error
+
+
+            angle = (self.closest_heading_rad - self.vehicle_heading_rad)*180/math.pi
+            if(angle > 180):
+                angle -= 360
+            elif(angle < -180):
+                angle += 360
+
+            new_steering_angle = 1*angle + 2.5*self.error
+
+
             self.old_steering_angle = new_steering_angle
             
             # now send a VehCmd message out
