@@ -6,15 +6,15 @@ from launch_ros.actions import Node
 def generate_launch_description():
     ld = LaunchDescription()
 
-    joy = Node(
-        package="mile5",
-        executable="joy",
+    VehControl = Node(
+        package="project2",
+        executable="VehControl",
         #parameters=[{"Up": 0.0},
         #            {"Ui": 0.0},
         #            {"Ud": 0.0}
         #]
     )
-    ld.add_action(joy)
+    ld.add_action(VehControl)
     
     odom = Node(
         package="odom_data",
